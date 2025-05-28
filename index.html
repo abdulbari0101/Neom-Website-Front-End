@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEOM Project</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+        body {
+            font-family: "Cairo", "Arial", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #d2d2d2;
+            color: #333;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body.night-mode {
+            background-color: #2d3849;
+            color: #f0f8ff;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .night-mode header {
+            background-color: #1a1a2e;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71, #1e3c72);
+            background-size: 200% auto;
+            animation: rainbow 5s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+        }
+
+        .night-mode footer {
+            background-color: #1a1a2e;
+        }
+
+        .container {
+            width: 85%;
+            margin: 40px auto 80px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s ease;
+        }
+
+        .night-mode .container {
+            background-color: rgba(10, 25, 47, 0.9);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+
+        img:hover {
+            transform: scale(1.03);
+        }
+
+        p {
+            line-height: 1.8;
+            font-size: 18px;
+            transition: color 0.5s ease;
+        }
+
+        .night-mode p {
+            color: #e6f1ff;
+        }
+
+        .night-mode h1,
+        .night-mode h2 {
+            color: #64ffda;
+        }
+
+        .menu {
+            list-style: none;
+            width: 880px;
+            display: flex;
+            margin-right: auto;
+            margin-left: auto;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .menu li {
+            display: block;
+            margin: 10px;
+            border-radius: 25px;
+        }
+
+        .menu li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .menu li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .day-night-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 24px;
+        }
+
+        .day-night-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .night-mode .day-night-toggle {
+            background: rgba(0, 0, 0, 0.3);
+            color: #f0f8ff;
+        }
+
+        .moving-object {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff8a00, #e52e71);
+            border-radius: 50%;
+            position: fixed;
+            bottom: 20px;
+            left: -100px;
+            animation: moveObject 15s linear infinite;
+            z-index: 999;
+            opacity: 0.7;
+        }
+
+        @keyframes moveObject {
+            0% {
+                left: -100px;
+                transform: translateY(0);
+            }
+            50% {
+                left: calc(100% + 100px);
+                transform: translateY(-200px);
+            }
+            100% {
+                left: -100px;
+                transform: translateY(0);
+            }
+        }
+
+        .banner {
+            width: 100%;
+            height: 400px;
+            background: url('images/banner.jpg') center/cover no-repeat;
+            position: relative;
+            margin-bottom: 50px;
+            border-radius: 10px;
+            overflow: hidden;
+            animation: bannerZoom 20s infinite alternate;
+        }
+
+        @keyframes bannerZoom {
+            0% {
+                background-size: 100%;
+            }
+            100% {
+                background-size: 110%;
+            }
+        }
+
+        .banner-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .banner-text h2 {
+            color: white;
+            border: none;
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .shape-text {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+            margin: 40px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .flaming-text {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 40px 0;
+            animation: flaming 3s ease-in-out infinite;
+        }
+
+        @keyframes flaming {
+            0%, 100% {
+                text-shadow: 0 0 10px #ff8a00, 0 0 20px #ff8a00;
+            }
+            50% {
+                text-shadow: 0 0 15px #e52e71, 0 0 30px #e52e71;
+            }
+        }
+
+        .three-d-text {
+            font-size: 2rem;
+            color: #1e3c72;
+            text-shadow: 3px 3px 0 #999, 6px 6px 0 #777;
+            transform: perspective(500px) rotateX(20deg);
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .day-night-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .day-night-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .disintegration-effect {
+            position: relative;
+            overflow: hidden;
+            margin: 40px 0;
+            border-radius: 10px;
+        }
+
+        .disintegration-effect img {
+            display: block;
+            transition: all 1s ease;
+        }
+
+        .disintegration-effect:hover img {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+        .audio-player {
+            width: 100%;
+            margin: 40px 0;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .moving-object {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff8a00, #e52e71);
+            border-radius: 50%;
+            position: fixed;
+            bottom: 20px;
+            left: -100px;
+            animation: moveObject 15s linear infinite;
+            z-index: 999;
+            opacity: 0.7;
+        }
+
+        @keyframes moveObject {
+            0% {
+                left: -100px;
+                transform: translateY(0);
+            }
+            50% {
+                left: calc(100% + 100px);
+                transform: translateY(-200px);
+            }
+            100% {
+                left: -100px;
+                transform: translateY(0);
+            }
+        }
+
+        .zoom-container {
+            position: relative;
+            overflow: hidden;
+            margin: 40px 0;
+            border-radius: 10px;
+        }
+
+        .zoom-container img {
+            transition: transform 0.5s ease;
+        }
+
+        .zoom-container:hover img {
+            transform: scale(1.2);
+        }
+
+        .morphing-image {
+            width: 300px;
+            height: 300px;
+            margin: 40px auto;
+            background: url('images/morph1.jpg') center/cover;
+            border-radius: 50%;
+            animation: morph 8s infinite alternate;
+        }
+
+        @keyframes morph {
+            0% {
+                border-radius: 50%;
+                background-image: url('images/5.jpg');
+            }
+            33% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+                background-image: url('images/8.jpg');
+            }
+            66% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                background-image: url('images/6.jpg');
+            }
+            100% {
+                border-radius: 20% 80% 20% 80% / 80% 20% 80% 20%;
+                background-image: url('images/7.jpg');
+            }
+        }
+    </style>
+</head>
+<body dir="rtl">
+<header>
+    <h1>مشروع نيوم</h1>
+    <ul class="menu">
+        <li class="active"><a href="index.html">الرئيسية</a></li>
+        <li><a href="video.html">فيديو نيوم</a></li>
+        <li><a href="animation.html">معرض الصور</a></li>
+        <li><a href="news.html">أخبار</a></li>
+        <li><a href="technology.html">التقنية</a></li>
+        <li><a href="sustainability.html">الاستدامة</a></li>
+        <li><a href="contact-us.html">تواصل معنا</a></li>
+        <li><a href="programmers.html">المبرمجين</a></li>
+    </ul>
+</header>
+
+<button class="day-night-toggle" id="dayNightToggle">🌙</button>
+
+<div class="moving-object"></div>
+
+<div class="container">
+    <div class="banner">
+        <div class="banner-text">
+            <h2>رؤية جديدة لمستقبل الإنسانية</h2>
+        </div>
+    </div>
+
+    <div class="flaming-text">نيوم: حيث يلتقي المستقبل بالحاضر</div>
+
+    <div class="shape-text">
+        <h2>مشروع نيوم: رؤية لمستقبل مستدام ومبتكر</h2>
+        <p>نيوم هو مشروع ضخم ذو رؤية طموحة يقع في المنطقة الشمالية الغربية من المملكة العربية السعودية، ويشمل مساحة
+            26500 كيلومتر مربع على ساحل البحر الأحمر. تم تصوره كمركز للابتكار والتكنولوجيا والحياة المستدامة، ويهدف إلى
+            إعادة تعريف التطوير الحضري ووضع معايير جديدة للنمو الاقتصادي والرعاية البيئية.</p>
+    </div>
+
+    <div class="three-d-text">أهلاً بكم في مدينة المستقبل</div>
+
+    <div style="margin-top: 50px; margin-bottom: 50px;">
+        <div>
+            <h2>الأهداف الرئيسية لمشروع نيوم</h2>
+            <p>
+                تشمل أهداف نيوم الطموحة العديد من النقاط الرئيسية:<br>
+
+                <B>الاستدامة:</B> تلتزم نيوم بأن تصبح رائدة عالمية في التنمية المستدامة، مدعومة بمصادر الطاقة المتجددة
+                وتبني الممارسات الصديقة للبيئة.<br>
+
+                <B>الابتكار:</B> تهدف نيوم إلى تعزيز ثقافة الابتكار، وجذب المواهب العالمية وإثبات نفسها كمركز للأبحاث
+                والتطوير المتطور.<br>
+
+                <B>النمو الاقتصادي:</B> تسعى نيوم إلى خلق نظام بيئي اقتصادي نابض بالحياة، وجذب الشركات والاستثمارات لدفع
+                خلق فرص العمل وتنويع الاقتصاد.<br>
+
+                <B>تحسين جودة الحياة:</B> تسعى نيوم إلى توفير تجربة حياة عالمية المستوى لسكانها، من خلال تقديم خدمات
+                رعاية صحية وتعليمية وترفيهية استثنائية.<br>
+            </p>
+        </div>
+        <div class="disintegration-effect" style="margin-top: 40px;">
+            <img src="images/2.jpg" alt="NEOM Project Image" style="width: 100%;">
+        </div>
+    </div>
+
+    <h2>المكونات الرئيسية لمشروع نيوم</h2>
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 75%;">
+                <p>
+                    تشمل خطة تطوير نيوم العديد من المكونات الرئيسية:<br>
+
+                    <B>أوكساغون:</B> ستكون أوكساجون، وهي قلب نيوم، مدينة تعمل بالذكاء الاصطناعي، مصممة لرفاهية الإنسان
+                    والاستدامة.<br>
+
+                    <B>خليج نيوم:</B> تطور ساحلي يركز على الصحة والسياحة والترفيه، يقدم مزيجًا فريدًا من الجمال الطبيعي
+                    والتجارب المبتكرة.<br>
+
+                    <B>ذا لاين:</B> مدينة خطية تمتد على طول 170 كيلومترًا، تعمل بالطاقة المتجددة ومصممة للاندماج السلس
+                    مع البيئة المحيطة.<br>
+
+                    <B>مجمع نيوم الصناعي:</B> مركز للتصنيع المتقدم والتكنولوجيا، يجذب الصناعات العالمية للمساهمة في
+                    النمو الاقتصادي لنيوم.<br>
+                </p>
+            </td>
+            <td style="width: 25%; padding-top:10px;">
+                <div class="zoom-container">
+                    <img src="images/1.png" alt="NEOM Project Image" style="width: 100%; height: 260px;">
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="morphing-image"></div>
+
+    <div style="margin-top: 80px;">
+        <div class="zoom-container">
+            <img src="images/4.jpeg" alt="NEOM Project Image" style="width: 100%; height: 600px;">
+        </div>
+    </div>
+
+    <div class="audio-player">
+        <h3>استمع إلى رؤية نيوم</h3>
+        <audio controls style="width: 100%;">
+            <source src="audio/neom-vision.mp3" type="audio/mpeg">
+            متصفحك لا يدعم تشغيل الصوتيات.
+        </audio>
+    </div>
+
+    <h2>التقدم والتحديات</h2>
+    <p>
+        ما زال مشروع نيوم في مراحله الأولى من التطوير، وهناك العديد من التحديات التي تنتظره. وتشمل هذه:<br>
+
+        <B>الاستثمار المالي:</B> جذب رأس المال الكبير المطلوب لتحقيق خطط نيوم الطموحة.<br>
+
+        <B>اكتساب المواهب:</B> توظيف والاستبقاء بالقوى العاملة الماهرة اللازمة لدفع الابتكار والنمو الاقتصادي.<br>
+
+        <B>الاعتبارات البيئية:</B> ضمان انسجام تطوير نيوم مع مبادئ الاستدامة وتقليل التأثير البيئي.<br>
+
+        <B>التكامل الاجتماعي:</B> دمج نيوم في المجتمعات المحيطة وضمان مشاركة فوائده بشكل عادل.<br>
+    </p>
+</div>
+
+<footer>
+    <p> مشروع نيوم - كل الحقوق محفوظة</p>
+</footer>
+
+<script>
+    // Day/Night Toggle with localStorage
+    const dayNightToggle = document.getElementById('dayNightToggle');
+    const body = document.body;
+
+    // Check for saved user preference
+    if (localStorage.getItem('nightMode') === 'enabled') {
+        body.classList.add('night-mode');
+        dayNightToggle.textContent = '☀️';
+    }
+
+    dayNightToggle.addEventListener('click', function () {
+        body.classList.toggle('night-mode');
+
+        // Save user preference
+        if (body.classList.contains('night-mode')) {
+            localStorage.setItem('nightMode', 'enabled');
+            dayNightToggle.textContent = '☀️';
+        } else {
+            localStorage.setItem('nightMode', 'disabled');
+            dayNightToggle.textContent = '🌙';
+        }
+    });
+    
+    // Image disintegration effect
+    const disintegrationImages = document.querySelectorAll('.disintegration-effect img');
+    disintegrationImages.forEach(img => {
+        img.addEventListener('mouseenter', function () {
+            this.style.filter = 'brightness(1.2) contrast(1.2)';
+        });
+        img.addEventListener('mouseleave', function () {
+            this.style.filter = 'none';
+        });
+    });
+</script>
+</body>
+</html>

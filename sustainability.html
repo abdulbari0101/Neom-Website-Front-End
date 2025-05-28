@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاستدامة في نيوم</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+        body {
+            font-family: "Cairo", "Arial", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #d2d2d2;
+            color: #333;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body.night-mode {
+            background-color: #2d3849;
+            color: #f0f8ff;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .night-mode header {
+            background-color: #1a1a2e;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71, #1e3c72);
+            background-size: 200% auto;
+            animation: rainbow 5s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+        }
+
+        .night-mode footer {
+            background-color: #1a1a2e;
+        }
+
+        .container {
+            width: 85%;
+            margin: 40px auto 80px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s ease;
+        }
+
+        .night-mode .container {
+            background-color: rgba(10, 25, 47, 0.9);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+
+        img:hover {
+            transform: scale(1.03);
+        }
+
+        p {
+            line-height: 1.8;
+            font-size: 18px;
+            transition: color 0.5s ease;
+        }
+
+        .night-mode p {
+            color: #e6f1ff;
+        }
+
+        .night-mode h1,
+        .night-mode h2 {
+            color: #64ffda;
+        }
+
+        .menu {
+            list-style: none;
+            width: 880px;
+            display: flex;
+            margin-right: auto;
+            margin-left: auto;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .menu li {
+            display: block;
+            margin: 10px;
+            border-radius: 25px;
+        }
+
+        .menu li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .menu li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .day-night-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 24px;
+        }
+
+        .day-night-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .night-mode .day-night-toggle {
+            background: rgba(0, 0, 0, 0.3);
+            color: #f0f8ff;
+        }
+
+        .moving-object {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff8a00, #e52e71);
+            border-radius: 50%;
+            position: fixed;
+            bottom: 20px;
+            left: -100px;
+            animation: moveObject 15s linear infinite;
+            z-index: 999;
+            opacity: 0.7;
+        }
+
+        @keyframes moveObject {
+            0% {
+                left: -100px;
+                transform: translateY(0);
+            }
+            50% {
+                left: calc(100% + 100px);
+                transform: translateY(-200px);
+            }
+            100% {
+                left: -100px;
+                transform: translateY(0);
+            }
+        }
+
+        .flaming-text {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 40px 0;
+            animation: flaming 3s ease-in-out infinite;
+        }
+
+        @keyframes flaming {
+            0%, 100% {
+                text-shadow: 0 0 10px #ff8a00, 0 0 20px #ff8a00;
+            }
+            50% {
+                text-shadow: 0 0 15px #e52e71, 0 0 30px #e52e71;
+            }
+        }
+
+        .three-d-text {
+            font-size: 2rem;
+            color: #1e3c72;
+            text-shadow: 3px 3px 0 #999, 6px 6px 0 #777;
+            transform: perspective(500px) rotateX(20deg);
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .day-night-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .day-night-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .moving-object {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff8a00, #e52e71);
+            border-radius: 50%;
+            position: fixed;
+            bottom: 20px;
+            left: -100px;
+            animation: moveObject 15s linear infinite;
+            z-index: 999;
+            opacity: 0.7;
+        }
+
+        .sustainability-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/sustainability-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .sustainability-hero h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .night-mode .stat-card {
+            background: #112240;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 10px;
+            transition: color 0.5s ease;
+        }
+
+        .night-mode .stat-number {
+            color: #64ffda;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .night-mode .stat-label {
+            color: #aaa;
+        }
+
+        .initiative-card {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .night-mode .initiative-card {
+            background: #112240;
+        }
+
+        .initiative-image {
+            flex: 1;
+            min-height: 300px;
+        }
+
+        .initiative-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .initiative-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .initiative-card {
+                flex-direction: column;
+            }
+        }
+
+        .leaf-icon {
+            color: #4CAF50;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body dir="rtl">
+<header>
+    <h1>الاستدامة في نيوم</h1>
+    <ul class="menu">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="video.html">فيديو نيوم</a></li>
+        <li><a href="animation.html">معرض الصور</a></li>
+        <li><a href="news.html">أخبار</a></li>
+        <li><a href="technology.html">التقنية</a></li>
+        <li><a href="sustainability.html" class="active">الاستدامة</a></li>
+        <li><a href="contact-us.html">تواصل معنا</a></li>
+        <li><a href="programmers.html">المبرمجين</a></li>
+    </ul>
+</header>
+<button class="day-night-toggle" id="dayNightToggle">🌙</button>
+<div class="container">
+    <div class="sustainability-hero">
+        <div>
+            <h2>رؤية مستدامة للمستقبل</h2>
+            <p>نيوم تضع معايير جديدة للتنمية المستدامة والحفاظ على البيئة</p>
+        </div>
+    </div>
+
+    <h2>أرقام الاستدامة</h2>
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="leaf-icon">🌿</div>
+            <div class="stat-number">100%</div>
+            <div class="stat-label">طاقة متجددة</div>
+        </div>
+        <div class="stat-card">
+            <div class="leaf-icon">💧</div>
+            <div class="stat-number">95%</div>
+            <div class="stat-label">إعادة تدوير المياه</div>
+        </div>
+        <div class="stat-card">
+            <div class="leaf-icon">🌎</div>
+            <div class="stat-number">0</div>
+            <div class="stat-label">انبعاثات كربونية</div>
+        </div>
+    </div>
+
+    <h2>مبادرات الاستدامة</h2>
+    <div class="initiative-card">
+        <div class="initiative-image">
+            <img src="images/solar-farm.jpg" alt="مزرعة الطاقة الشمسية">
+        </div>
+        <div class="initiative-content">
+            <h3>مزرعة الطاقة الشمسية</h3>
+            <p>أكبر مزرعة للطاقة الشمسية في المنطقة لتوفير 100% من احتياجات نيوم من الطاقة النظيفة والمتجددة، بطاقة
+                إنتاجية تصل إلى 5 جيجاواط.</p>
+        </div>
+    </div>
+
+    <div class="initiative-card">
+        <div class="initiative-content">
+            <h3>نظام إدارة المياه</h3>
+            <p>نظام متكامل لإدارة المياه يعتمد على أحدث التقنيات لإعادة تدوير 95% من المياه المستخدمة في نيوم، مع تقليل
+                الهدر إلى أدنى مستوى.</p>
+        </div>
+        <div class="initiative-image">
+            <img src="images/water-system.jpg" alt="نظام إدارة المياه">
+        </div>
+    </div>
+</div>
+<footer>
+    <p> مشروع نيوم - كل الحقوق محفوظة</p>
+</footer>
+</body>
+<script>
+    // Animation for tech cards
+    const techCards = document.querySelectorAll('.tech-card');
+
+    techCards.forEach((card, index) => {
+        // Staggered animation
+        card.style.animationDelay = `${index * 0.2}s`;
+
+        // Add hover effect for all cards
+        card.addEventListener('mouseenter', function () {
+            this.classList.add('animate__animated', 'animate__pulse');
+        });
+
+        card.addEventListener('mouseleave', function () {
+            this.classList.remove('animate__animated', 'animate__pulse');
+        });
+    });
+    // Day/Night Toggle with localStorage
+    const dayNightToggle = document.getElementById('dayNightToggle');
+    const body = document.body;
+
+    // Check for saved user preference
+    if (localStorage.getItem('nightMode') === 'enabled') {
+        body.classList.add('night-mode');
+        dayNightToggle.textContent = '☀️';
+    }
+
+    dayNightToggle.addEventListener('click', function () {
+        body.classList.toggle('night-mode');
+
+        // Save user preference
+        if (body.classList.contains('night-mode')) {
+            localStorage.setItem('nightMode', 'enabled');
+            dayNightToggle.textContent = '☀️';
+        } else {
+            localStorage.setItem('nightMode', 'disabled');
+            dayNightToggle.textContent = '🌙';
+        }
+    });
+
+</script>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صور متحركة لنيوم</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+        body {
+            font-family: "Cairo", "Arial", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #d2d2d2;
+            color: #333;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body.night-mode {
+            background-color: #2d3849;
+            color: #f0f8ff;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .night-mode header {
+            background-color: #1a1a2e;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71, #1e3c72);
+            background-size: 200% auto;
+            animation: rainbow 5s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+        }
+
+        .night-mode footer {
+            background-color: #1a1a2e;
+        }
+
+        .container {
+            width: 85%;
+            margin: 40px auto 80px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s ease;
+        }
+
+        .night-mode .container {
+            background-color: rgba(10, 25, 47, 0.9);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+
+        img:hover {
+            transform: scale(1.03);
+        }
+
+        p {
+            line-height: 1.8;
+            font-size: 18px;
+            transition: color 0.5s ease;
+        }
+
+        .night-mode p {
+            color: #e6f1ff;
+        }
+
+        .menu {
+            list-style: none;
+            width: 880px;
+            display: flex;
+            margin-right: auto;
+            margin-left: auto;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .menu li {
+            display: block;
+            margin: 10px;
+            border-radius: 25px;
+        }
+
+        .menu li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .menu li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .day-night-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 24px;
+        }
+
+        .day-night-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .night-mode .day-night-toggle {
+            background: rgba(0, 0, 0, 0.3);
+            color: #f0f8ff;
+        }
+
+        .night-mode h1,
+        .night-mode h2 {
+            color: #64ffda;
+        }
+
+
+        @keyframes moveObject {
+            0% {
+                left: -100px;
+                transform: translateY(0);
+            }
+            50% {
+                left: calc(100% + 100px);
+                transform: translateY(-200px);
+            }
+            100% {
+                left: -100px;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoom {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .animated-img {
+            animation: fadeIn 2s ease-in, zoom 8s infinite;
+            margin: 20px auto;
+            display: block;
+            max-width: 90%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .day-night-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .day-night-toggle:hover {
+            transform: scale(1.1);
+        }
+
+
+    </style>
+</head>
+<body dir="rtl">
+<header>
+    <h1>معرض الصور المتحركة لنيوم</h1>
+    <ul class="menu">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="video.html">فيديو نيوم</a></li>
+        <li class="active"><a href="animation.html">معرض الصور</a></li>
+        <li><a href="news.html">أخبار</a></li>
+        <li><a href="technology.html">التقنية</a></li>
+        <li><a href="sustainability.html">الاستدامة</a></li>
+        <li><a href="contact-us.html">تواصل معنا</a></li>
+        <li><a href="programmers.html">المبرمجين</a></li>
+    </ul>
+</header>
+<button class="day-night-toggle" id="dayNightToggle">🌙</button>
+
+<div class="container">
+    <h2>استكشف نيوم من خلال هذه الصور</h2>
+    <p>شاهد كيف ستبدو مدن نيوم المستقبلية من خلال هذه الصور:</p>
+
+    <img src="images/6.jpg" alt="ذا لاين " class="animated-img">
+    <p><strong>ذا لاين:</strong> المدينة الخطية التي تمتد 170 كم</p>
+
+    <img src="images/7.jpg" alt="أوكساجون " class="animated-img">
+    <p><strong>أوكساجون:</strong> المركز الصناعي العائم</p>
+
+    <img src="images/8.jpg" alt="تروجينا " class="animated-img">
+    <p><strong>تروجينا:</strong> وجهة الجبال السياحية</p>
+
+    <div style="margin-top: 50px;">
+        <h2>رؤية للمستقبل</h2>
+        <p>تمثل هذه الصور الرؤية الحديثة للتطوير الحضري التي يقدمها مشروع نيوم، حيث تدمج بين التكنولوجيا
+            المتقدمة والاستدامة البيئية.</p>
+    </div>
+</div>
+<footer>
+    <p> مشروع نيوم - كل الحقوق محفوظة</p>
+</footer>
+
+<script>
+    // Day/Night Toggle with localStorage
+    const dayNightToggle = document.getElementById('dayNightToggle');
+    const body = document.body;
+
+    // Check for saved user preference
+    if (localStorage.getItem('nightMode') === 'enabled') {
+        body.classList.add('night-mode');
+        dayNightToggle.textContent = '☀️';
+    }
+
+    dayNightToggle.addEventListener('click', function () {
+        body.classList.toggle('night-mode');
+
+        // Save user preference
+        if (body.classList.contains('night-mode')) {
+            localStorage.setItem('nightMode', 'enabled');
+            dayNightToggle.textContent = '☀️';
+        } else {
+            localStorage.setItem('nightMode', 'disabled');
+            dayNightToggle.textContent = '🌙';
+        }
+    });
+</script>
+</body>
+</html>

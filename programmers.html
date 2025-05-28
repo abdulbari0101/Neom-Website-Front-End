@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فريق المبرمجين - مشروع نيوم</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+        body {
+            font-family: "Cairo", "Arial", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #d2d2d2;
+            color: #333;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body.night-mode {
+            background-color: #2d3849;
+            color: #f0f8ff;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        .night-mode header {
+            background-color: #1a1a2e;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff8a00, #e52e71, #1e3c72);
+            background-size: 200% auto;
+            animation: rainbow 5s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+        }
+
+        .night-mode footer {
+            background-color: #1a1a2e;
+        }
+
+        .container {
+            width: 85%;
+            margin: 40px auto 80px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s ease;
+        }
+
+        .night-mode .container {
+            background-color: rgba(10, 25, 47, 0.9);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu {
+            list-style: none;
+            width: 880px;
+            display: flex;
+            margin-right: auto;
+            margin-left: auto;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .menu li {
+            display: block;
+            margin: 10px;
+            border-radius: 25px;
+        }
+
+        .menu li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .menu li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .day-night-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 24px;
+        }
+
+        .day-night-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .night-mode .day-night-toggle {
+            background: rgba(0, 0, 0, 0.3);
+            color: #f0f8ff;
+        }
+
+        h1, h2 {
+            transition: color 0.5s ease;
+        }
+
+        .night-mode h1,
+        .night-mode h2 {
+            color: #64ffda;
+        }
+
+        /* Team Members Styles */
+        .team-section {
+            margin-top: 40px;
+        }
+
+        .team-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2em;
+            color: #0078d7;
+        }
+
+        .night-mode .team-title {
+            color: #64ffda;
+        }
+
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .member-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .night-mode .member-card {
+            background: #112240;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .member-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 5px solid #f0f8ff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .night-mode .member-image {
+            border-color: #1a2a3a;
+        }
+
+        .member-name {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .night-mode .member-name {
+            color: #f0f8ff;
+        }
+
+        .member-id {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .night-mode .member-id {
+            color: #aaa;
+        }
+
+        .member-email {
+            color: #0078d7;
+            word-break: break-all;
+        }
+
+        .night-mode .member-email {
+            color: #4cc9f0;
+        }
+
+        .team-description {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 1.1em;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body dir="rtl">
+<header>
+    <h1>فريق المبرمجين</h1>
+    <ul class="menu">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="video.html">فيديو نيوم</a></li>
+        <li><a href="animation.html">معرض الصور</a></li>
+        <li><a href="news.html">أخبار</a></li>
+        <li><a href="technology.html">التقنية</a></li>
+        <li><a href="sustainability.html">الاستدامة</a></li>
+        <li><a href="contact-us.html">تواصل معنا</a></li>
+        <li class="active"><a href="programmers.html">المبرمجين</a></li>
+    </ul>
+</header>
+<button class="day-night-toggle" id="dayNightToggle">🌙</button>
+<div class="container">
+    <div class="team-section">
+        <h2 class="team-title">فريق تطوير موقع نيوم</h2>
+        <p class="team-description">
+            نقدم لكم فريق المبرمجين المتميز الذي عمل على تطوير هذا الموقع. فريقنا يتكون من طلاب مبدعين في مجال تطوير
+            الويب،
+            حيث قاموا بتصميم وتنفيذ جميع أجزاء الموقع باحترافية عالية لتقديم تجربة مستخدم مميزة لزوار موقع نيوم.
+        </p>
+
+        <div class="team-members">
+            <!-- Member 1 -->
+            <div class="member-card">
+                <img src="https://ui-avatars.com/api/?name=Abrar+Humedi&background=0078d7&color=fff&size=200"
+                     alt="Abrar Humedi" class="member-image">
+                <h3 class="member-name">Abrar Sultan Humedi</h3>
+                <p class="member-id">202413653</p>
+                <p class="member-email">Abrar1@gmail.com</p>
+            </div>
+
+            <!-- Member 2 -->
+            <div class="member-card">
+                <img src="https://ui-avatars.com/api/?name=Rafif+Smalil&background=e52e71&color=fff&size=200"
+                     alt="Rafif Smalil" class="member-image">
+                <h3 class="member-name">Rafif Yahya Smalil</h3>
+                <p class="member-id">202413602</p>
+                <p class="member-email">Rafif2@gmail.com</p>
+            </div>
+
+            <!-- Member 3 -->
+            <div class="member-card">
+                <img src="https://ui-avatars.com/api/?name=Razan+Houmady&background=1e3c72&color=fff&size=200"
+                     alt="Razan Houmady" class="member-image">
+                <h3 class="member-name">Razan Abdullah Houmady</h3>
+                <p class="member-id">202413661</p>
+                <p class="member-email">Razan3@gmail.com</p>
+            </div>
+
+            <!-- Member 4 -->
+            <div class="member-card">
+                <img src="https://ui-avatars.com/api/?name=Zainab+Harisi&background=ff8a00&color=fff&size=200"
+                     alt="Zainab Harisi" class="member-image">
+                <h3 class="member-name">Zainab Salem Harisi</h3>
+                <p class="member-id">202413610</p>
+                <p class="member-email">Zainab4@gmail.com</p>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <p> مشروع نيوم - كل الحقوق محفوظة</p>
+</footer>
+
+<script>
+    // Day/Night Toggle with localStorage
+    const dayNightToggle = document.getElementById('dayNightToggle');
+    const body = document.body;
+
+    // Check for saved user preference
+    if (localStorage.getItem('nightMode') === 'enabled') {
+        body.classList.add('night-mode');
+        dayNightToggle.textContent = '☀️';
+    }
+
+    dayNightToggle.addEventListener('click', function () {
+        body.classList.toggle('night-mode');
+
+        // Save user preference
+        if (body.classList.contains('night-mode')) {
+            localStorage.setItem('nightMode', 'enabled');
+            dayNightToggle.textContent = '☀️';
+        } else {
+            localStorage.setItem('nightMode', 'disabled');
+            dayNightToggle.textContent = '🌙';
+        }
+    });
+</script>
+</body>
+</html>
